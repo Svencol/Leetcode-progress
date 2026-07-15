@@ -1,22 +1,19 @@
-class Solution:
-    def isValid(self, s: str) -> bool:
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
         stack = []
-        for i,char in enumerate(s):
-            if char in "{[(":
-                stack.append(char)
-            else:
-                if len(stack) == 0:
-                    return False
-                top_char = stack.pop()
-                if top_char == "{" and char == "}":
-                    continue
-                elif top_char == "(" and char == ")":
-                    continue
-                elif top_char == "[" and char == "]":
-                    continue
+        closeToOpen = {")":"(", "}":"{","]":"["}
+        for c in s:
+            if c in closeToOpen:
+                if stack and stack[-1] == closeToOpen[c]:
+                    stack.pop()
                 else:
                     return False
-        
-        return len(stack) == 0
-                
+            else:
+                stack.append(c)
+        return True if not stack else False
+
         
